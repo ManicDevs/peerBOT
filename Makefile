@@ -6,11 +6,16 @@ CFLAGS+= \
 	-g \
 	-O0 \
 	-Wall \
+	-Ithirdparty/multihash/include \
+	-Ithirdparty/multiaddr/include \
+	-Ithirdparty/libp2p/include \
 	-Isrc/include \
 	-Lbuild/
 
 SRCS = \
 	src/main.c
+
+PROCEED=0
 
 all: libp2p peerbot
 	@if test -f build/peerbot; then \
@@ -31,11 +36,12 @@ libp2p:
 
 peerbot:
 	@echo "[Peerbot Compilation]"
-	@if test -f build/libp2p.a; then \
-		$(CC) $(LDFLAGS) $(SRCS) $(CFLAGS) $(LIBS) -o build/$@; \
-	else \
+	@if test ! -f build/libp2p.a; then \
 		echo "Please use only 'make'"; \
+		exit 1; \
 	fi
+
+	$(CC) $(LDFLAGS) $(SRCS) $(CFLAGS) $(LIBS) -o build/$@
 
 install:
 	@echo "[Peerbot Installation]"
