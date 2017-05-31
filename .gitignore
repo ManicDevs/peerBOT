@@ -1,0 +1,6 @@
+build/
+debug/
+*.mk
+*.project
+*.o
+*.a
