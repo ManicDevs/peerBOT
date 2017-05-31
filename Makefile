@@ -1,21 +1,23 @@
 LIBS+= \
+	-lm \
 	-lp2p \
-	-pthread
+	-lmultiaddr \
+	-lmultihash \
+	-lprotobuf
 
 CFLAGS+= \
 	-g \
 	-O0 \
 	-Wall \
+	-I. \
 	-Ithirdparty/multihash/include \
 	-Ithirdparty/multiaddr/include \
 	-Ithirdparty/libp2p/include \
 	-Isrc/include \
-	-Lbuild/
+	-Lbuild
 
 SRCS = \
 	src/main.c
-
-PROCEED=0
 
 all: libp2p peerbot
 	@if test -f build/peerbot; then \
@@ -32,6 +34,7 @@ libp2p:
 	cp thirdparty/multiaddr/test_multiaddr build/
 	cp thirdparty/multiaddr/libmultiaddr.a build/
 	cp thirdparty/multihash/libmultihash.a build/
+	cp thirdparty/protobuf/libprotobuf.a build/
 	cp thirdparty/libp2p/libp2p.a build/
 
 peerbot:
@@ -40,7 +43,6 @@ peerbot:
 		echo "Please use only 'make'"; \
 		exit 1; \
 	fi
-
 	$(CC) $(LDFLAGS) $(SRCS) $(CFLAGS) $(LIBS) -o build/$@
 
 install:

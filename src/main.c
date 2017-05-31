@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <libp2p/conn/connection.h>
+#include <libp2p/conn/dialer.h>
+#include <multiaddr/multiaddr.h>
 
 int main(int argc, char **argv)
 {

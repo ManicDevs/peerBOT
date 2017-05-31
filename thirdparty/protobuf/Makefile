@@ -4,9 +4,12 @@ LFLAGS =
 DEPS = protobuf.h
 OBJS = protobuf.o varint.o
 
-all: protobuf_reader
+all: protobuf_reader link
 	cd test; make all;
-	
+
+link: 
+	ar rcs libprotobuf.a $(OBJS)
+
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
@@ -17,6 +20,7 @@ test_protobuf: $(OBJS)
 	$(CC) -o $@ $^ $(LFLAGS)
 
 clean:
+	rm -f *.a
 	rm -f *.o
 	rm -f protobuf_reader;
 	cd test; make clean;
