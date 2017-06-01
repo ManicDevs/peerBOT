@@ -1,9 +1,9 @@
 LIBS+= \
 	-lm \
-	-lp2p \
 	-lmultiaddr \
 	-lmultihash \
-	-lprotobuf
+	-lprotobuf \
+	-lp2p
 
 CFLAGS+= \
 	-g \
@@ -12,6 +12,7 @@ CFLAGS+= \
 	-I. \
 	-Ithirdparty/multihash/include \
 	-Ithirdparty/multiaddr/include \
+	-Ithirdparty/protobuf/include \
 	-Ithirdparty/libp2p/include \
 	-Isrc/include \
 	-Lbuild
