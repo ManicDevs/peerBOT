@@ -15,35 +15,40 @@
  * @param results_length the size of the results after being encoded
  * @returns true(1) on success
  */
-int multibase_encode(const char base, const unsigned char* incoming, size_t incoming_length, unsigned char* results, size_t results_max_length, size_t* results_length) {
-	*results_length = results_max_length;
-	int retVal = 0;
+int multibase_encode(const char base, const unsigned char *incoming, size_t incoming_length, unsigned char *results, size_t results_max_length, size_t *results_length)
+{
+    int retVal = 0;
 
-	switch (base) {
-		case (MULTIBASE_BASE58_BTC):
-			retVal = libp2p_crypto_encoding_base58_encode(incoming, incoming_length, &results, results_length);
-			break;
-		case(MULTIBASE_BASE16):
-			retVal = libp2p_crypto_encoding_base16_encode(incoming, incoming_length, results, results_length);
-			break;
-		default: // unsupported format
-			return 0;
-	}
-	// check to see if there was a problem
-	if (retVal == 0)
-		return 0;
+    *results_length = results_max_length;
 
-	// we have the hash, now add the code to the first byte (if there is room)
+    switch (base)
+    {
+        case(MULTIBASE_BASE58_BTC):
+            retVal = libp2p_crypto_encoding_base58_encode(incoming, incoming_length, &results, results_length);
+        break;
 
-	if (*results_length >= results_max_length) { // It could be equal, but should never be greater. But just in case.
-		return 0; // buffer isn't big enough
-	}
+        case(MULTIBASE_BASE16):
+            retVal = libp2p_crypto_encoding_base16_encode(incoming, incoming_length, results, results_length);
+        break;
 
-	memcpy(&results[1], results, *results_length);
-	results[0] = base;
-	*results_length += 1;
+        default: // unsupported format
+            return 0;
+    }
 
-	return 1;
+    // check to see if there was a problem
+    if(retVal == 0)
+        return 0;
+
+    // we have the hash, now add the code to the first byte (if there is room)
+
+    if(*results_length >= results_max_length) // It could be equal, but should never be greater. But just in case.
+        return 0; // buffer isn't big enough
+
+    memcpy(&results[1], results, *results_length);
+    results[0] = base;
+    *results_length += 1;
+
+    return 1;
 }
 
 /***
@@ -53,14 +58,18 @@ int multibase_encode(const char base, const unsigned char* incoming, size_t inco
  * @param incoming_length the length of the array in bytes
  * @returns the appropriate size of the buffer
  */
-int multibase_encode_size(const char base, const unsigned char* incoming, size_t incoming_length) {
-	switch (base) {
-	case (MULTIBASE_BASE58_BTC):
-			return libp2p_crypto_encoding_base58_encode_size(incoming_length) + 1;
-	case (MULTIBASE_BASE16):
-			return libp2p_crypto_encoding_base16_encode_size(incoming_length);
-	}
-	return 0;
+int multibase_encode_size(const char base, const unsigned char *incoming, size_t incoming_length)
+{
+    switch(base)
+    {
+        case (MULTIBASE_BASE58_BTC):
+            return libp2p_crypto_encoding_base58_encode_size(incoming_length) + 1;
+
+        case (MULTIBASE_BASE16):
+            return libp2p_crypto_encoding_base16_encode_size(incoming_length);
+    }
+
+    return 0;
 }
 
 /**
@@ -72,27 +81,32 @@ int multibase_encode_size(const char base, const unsigned char* incoming, size_t
  * @param results_length the size of the results after being encoded
  * @returns true(1) on success
  */
-int multibase_decode(const unsigned char* incoming, size_t incoming_length, unsigned char* results, size_t results_max_length, size_t* results_length) {
-	*results_length = results_max_length;
-	int retVal = 0;
+int multibase_decode(const unsigned char *incoming, size_t incoming_length, unsigned char *results, size_t results_max_length, size_t *results_length)
+{
+    int retVal = 0;
+    const char base = incoming[0];
 
-	const char base = incoming[0];
+    *results_length = results_max_length;
 
-	switch (base) {
-		case (MULTIBASE_BASE58_BTC):
-			retVal = libp2p_crypto_encoding_base58_decode(&incoming[1], incoming_length - 1, &results, results_length);
-			break;
-		case(MULTIBASE_BASE16):
-			retVal = libp2p_crypto_encoding_base16_decode(&incoming[1], incoming_length - 1, results, results_length);
-			break;
-		default: // unsupported format
-			return 0;
-	}
-	// check to see if there was a problem
-	if (retVal == 0)
-		return 0;
+    switch(base)
+    {
+        case (MULTIBASE_BASE58_BTC):
+            retVal = libp2p_crypto_encoding_base58_decode(&incoming[1], incoming_length - 1, &results, results_length);
+        break;
 
-	return 1;
+        case(MULTIBASE_BASE16):
+            retVal = libp2p_crypto_encoding_base16_decode(&incoming[1], incoming_length - 1, results, results_length);
+        break;
+
+        default: // unsupported format
+            return 0;
+    }
+
+    // check to see if there was a problem
+    if(retVal == 0)
+        return 0;
+
+    return 1;
 }
 
 /***
@@ -102,12 +116,16 @@ int multibase_decode(const unsigned char* incoming, size_t incoming_length, unsi
  * @param incoming_length the length of the array in bytes
  * @returns the appropriate size of the buffer
  */
-int multibase_decode_size(const char base, const unsigned char* incoming, size_t incoming_length) {
-	switch (base) {
-	case (MULTIBASE_BASE58_BTC):
-			return libp2p_crypto_encoding_base58_decode_size(incoming_length) + 1;
-	case (MULTIBASE_BASE16):
-			return libp2p_crypto_encoding_base16_decode_size(incoming_length);
-	}
-	return 0;
+int multibase_decode_size(const char base, const unsigned char *incoming, size_t incoming_length)
+{
+    switch(base)
+    {
+        case(MULTIBASE_BASE58_BTC):
+            return libp2p_crypto_encoding_base58_decode_size(incoming_length) + 1;
+
+        case(MULTIBASE_BASE16):
+            return libp2p_crypto_encoding_base16_decode_size(incoming_length);
+    }
+
+    return 0;
 }

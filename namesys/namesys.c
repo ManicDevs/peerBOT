@@ -7,7 +7,6 @@
 #include "ipfs/cid/cid.h"
 #include "ipfs/path/path.h"
 #include "ipfs/namesys/namesys.h"
-#include "ipfs/dnslink/dnslink.h"
 
 /* mpns (a multi-protocol NameSystem) implements generic IPFS naming.
  *

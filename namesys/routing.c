@@ -147,7 +147,6 @@ int ipfs_namesys_hex_string_to_bytes(const unsigned char* hex, unsigned char** b
  * @param path the path
  * @param name the name (b58 encoded)
  * @param depth
- * @param depth
  * @param prefix
  * @param pb
  * @returns 0 on success, otherwise error code

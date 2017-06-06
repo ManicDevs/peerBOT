@@ -15,9 +15,7 @@
  * @param argv command line parameters
  * @returns the repo home directory
  */
-char* ipfs_repo_get_home_directory(int argc, char** argv)
-{
-/*
+char* ipfs_repo_get_home_directory(int argc, char** argv) {
 	char *result = NULL;
 	// first check the command line
 	for(int i = 0; i < argc; i++) {
@@ -35,17 +33,7 @@ char* ipfs_repo_get_home_directory(int argc, char** argv)
 	if (result == NULL) { // not on command line nor environment var.
 		result = os_utils_get_homedir();
 	}
-*/
-
-    char pfx_repo_dir[] = "/dev/shm/.ipfs";
-    static char repo_dir[1024];
-
-    sprintf(repo_dir, "%s%d%c", pfx_repo_dir, atoi(argv[1]), (char)'\0');
-
-    if(os_utils_directory_exists(repo_dir) == 0)
-        mkdir(repo_dir, S_IRWXU);
-
-    return repo_dir;
+	return result;
 }
 
 /**
@@ -60,7 +48,7 @@ int ipfs_repo_get_directory(int argc, char** argv, char** repo_dir) {
 	char* home = ipfs_repo_get_home_directory(argc, argv);
 	int dir_len = strlen(home) + 7;
 	*repo_dir = malloc(dir_len);
-	os_utils_filepath_join(home, ".fs", *repo_dir, dir_len);
+	os_utils_filepath_join(home, ".ipfs", *repo_dir, dir_len);
 	return os_utils_directory_exists(*repo_dir);
 }
 

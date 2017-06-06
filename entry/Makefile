@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -O0 -I../include -I../thirdparty -I../thirdparty/multihash/include -I../thirdparty/multiaddr/include -I../thirdparty/protobuf -I../thirdparty/libp2p/include -g3 -Wall -std=c99
 LFLAGS = -L../build -lm -lmultihash -lmultiaddr -lprotobuf -lp2p -lpthread -lresolv
-DEPS = cmd/ipfs/test_init.h repo/test_repo_bootstrap_peers.h repo/test_repo_config.h repo/test_repo_identity.h cid/test_cid.h
+DEPS = repo/test_repo_bootstrap_peers.h repo/test_repo_config.h repo/test_repo_identity.h cid/test_cid.h
 OBJS = \
 	../importer/importer.o ../importer/exporter.o ../importer/resolver.o \
 	../unixfs/unixfs.o \
@@ -13,7 +13,6 @@ OBJS = \
 	../repo/config/addresses.o ../repo/config/swarm.o ../repo/config/peer.o \
 	../blocks/block.o ../blocks/blockstore.o \
 	../cid/cid.o \
-	../cmd/ipfs/init.o \
 	../commands/argument.o ../commands/command_option.o ../commands/command.o ../commands/cli/parse.o \
 	../util/errs.o \
 	../util/time.o \

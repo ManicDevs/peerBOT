@@ -3,7 +3,7 @@
 #include "ipfs/cid/cid.h"
 #include "ipfs/util/errs.h"
 
-struct CidSet *ipfs_cid_set_new ()
+struct CidSet *ipfs_cid_set_new()
 {
     return calloc(1, sizeof(struct CidSet));
 }
@@ -24,156 +24,183 @@ void ipfs_cid_set_destroy (struct CidSet **set)
     }
 }
 
-int ipfs_cid_set_add (struct CidSet *set, struct Cid *cid, int visit)
+int ipfs_cid_set_add(struct CidSet *set, struct Cid *cid, int visit)
 {
-    if (!set || !cid) {
+    if(!set || !cid)
         return ErrInvalidParam;
-    }
-    if (!set->cid) { // First item.
-        set->cid = malloc(sizeof (struct Cid));
-        if (!set->cid) {
+
+    if(!set->cid)
+    { // First item.
+        set->cid = malloc(sizeof(struct Cid));
+        if(!set->cid)
             return ErrAllocFailed;
-        }
-        memcpy(set->cid, cid, sizeof (struct Cid));
+
+        memcpy(set->cid, cid, sizeof(struct Cid));
+
         set->cid->hash = calloc(1, cid->hash_length);
-        if (!set->cid->hash) {
-            free (set->cid);
+        if(!set->cid->hash)
+        {
+            free(set->cid);
             return ErrAllocFailed;
         }
         memcpy(set->cid->hash, cid->hash, cid->hash_length);
         return 0;
     }
-    for (;;) {
-        if ((set->cid->hash_length == cid->hash_length) &&
-            (memcmp(set->cid->hash, cid->hash, cid->hash_length)==0)) {
+
+    for(;;)
+    {
+        if((set->cid->hash_length == cid->hash_length) &&
+            (memcmp(set->cid->hash, cid->hash, cid->hash_length)==0))
+        {
             // Already added.
-            if (!visit) {
+            if(!visit)
+            {
                 // update with new cid.
                 free(set->cid->hash);
-                memcpy(set->cid, cid, sizeof (struct Cid));
+                memcpy(set->cid, cid, sizeof(struct Cid));
+
                 set->cid->hash = calloc(1, cid->hash_length);
-                if (!set->cid->hash) {
+                if(!set->cid->hash)
                     return ErrAllocFailed;
-                }
+
                 memcpy(set->cid->hash, cid->hash, cid->hash_length);
             }
+
             return 0;
         }
-        if (!set->next) {
+
+        if(!set->next)
+        {
             set->next = ipfs_cid_set_new();
-            if (!set->next) {
+            if(!set->next)
                 return ErrAllocFailed;
-            }
+
             set = set->next;
-            set->cid = malloc(sizeof (struct Cid));
-            if (!set->cid) {
+            set->cid = malloc(sizeof(struct Cid));
+            if(!set->cid)
                 return ErrAllocFailed;
-            }
+
             memcpy(set->cid, cid, sizeof (struct Cid));
             set->cid->hash = calloc(1, cid->hash_length);
-            if (!set->cid->hash) {
+            if(!set->cid->hash)
                 return ErrAllocFailed;
-            }
+
             memcpy(set->cid->hash, cid->hash, cid->hash_length);
             return 0;
         }
+
         set = set->next;
     }
+
+    return 0;
 }
 
-int ipfs_cid_set_has (struct CidSet *set, struct Cid *cid)
+int ipfs_cid_set_has(struct CidSet *set, struct Cid *cid)
 {
-    if (!set || !cid || !set->cid) {
+    if(!set || !cid || !set->cid)
         return 0;
-    }
-    for (;;) {
-        if ((set->cid->hash_length == cid->hash_length) &&
-            (memcmp(set->cid->hash, cid->hash, cid->hash_length)==0)) {
+
+    for(;;)
+    {
+        if((set->cid->hash_length == cid->hash_length) &&
+            (memcmp(set->cid->hash, cid->hash, cid->hash_length) == 0))
             return 1; // has
-        }
-        if (!set->next) {
+
+        if(!set->next)
             return 0; // end without found.
-        }
+
         set = set->next;
     }
 }
 
-int ipfs_cid_set_remove (struct CidSet *set, struct Cid *cid)
+int ipfs_cid_set_remove(struct CidSet *set, struct Cid *cid)
 {
     struct CidSet *prev = set;
 
-    if (!set || !cid || !set->cid) {
+    if(!set || !cid || !set->cid)
         return 0;
-    }
-    for (;;) {
-        if ((set->cid->hash_length == cid->hash_length) &&
-            (memcmp(set->cid->hash, cid->hash, cid->hash_length)==0)) {
-            free (set->cid);
-            if (prev == set) { // first item
+
+    for(;;)
+    {
+        if((set->cid->hash_length == cid->hash_length) &&
+            (memcmp(set->cid->hash, cid->hash, cid->hash_length) == 0))
+        {
+            free(set->cid);
+            if(prev == set)
+            { // first item
                 set = set->next;
-                if (!set) {
+                if(!set)
+                {
                     prev->cid = NULL;
                     return 1;
                 }
+
                 prev->cid = set->cid;
-            } else {
-                prev->next = set->next;
             }
+            else
+                prev->next = set->next;
+
             free (set);
             return 1; // removed
         }
-        if (!set->next) {
+
+        if(!set->next)
             return 0; // end without found.
-        }
+
         prev = set;
         set = set->next;
     }
 }
 
-int ipfs_cid_set_len (struct CidSet *set)
+int ipfs_cid_set_len(struct CidSet *set)
 {
     int len;
 
-    if (!set || !set->cid) {
+    if(!set || !set->cid)
         return 0;
-    }
 
-    for (len = 0 ; set ; len++, set = set->next);
+    for(len = 0; set; len++, set = set->next);
 
     return len;
 }
 
-unsigned char **ipfs_cid_set_keys (struct CidSet *set)
+unsigned char **ipfs_cid_set_keys(struct CidSet *set)
 {
-    int i, len=ipfs_cid_set_len(set);
+    int i, len = ipfs_cid_set_len(set);
     unsigned char **ret;
 
-    ret = calloc(len+1, sizeof(char*));
-    if (ret) {
-        for (i = 0 ; i<len ; len++) {
-            if (set && set->cid && set->cid->hash) {
+    ret = calloc(len + 1, sizeof(char*));
+    if(ret)
+    {
+        for(i = 0; i < len; len++)
+        {
+            if(set && set->cid && set->cid->hash)
+            {
                 ret[i] = calloc(1, set->cid->hash_length + 1);
-                if (ret[i]) {
+                if(ret[i])
                     memcpy(ret[i], set->cid->hash, set->cid->hash_length);
-                }
             }
+
             set = set->next;
         }
     }
+
     return ret;
 }
 
-int ipfs_cid_set_foreach (struct CidSet *set, int (*func)(struct Cid *))
+int ipfs_cid_set_foreach(struct CidSet *set, int (*func)(struct Cid *))
 {
     int err = 0;
 
-    while (set) {
-        if (set->cid) {
+    while(set)
+    {
+        if(set->cid)
+        {
             err = func (set->cid);
-            if (err) {
+            if(err)
                 return err;
-            }
         }
+
         set = set->next;
     }
 
