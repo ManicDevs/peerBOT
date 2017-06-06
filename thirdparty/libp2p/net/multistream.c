@@ -259,7 +259,7 @@ struct Stream* libp2p_net_multistream_stream_new(int socket_fd, const char* ip, 
 		out->read = libp2p_net_multistream_read;
 		out->write = libp2p_net_multistream_write;
 		char str[strlen(ip) + 50];
-		sprintf(str, "/ip4/%s/tcp/%d%c", ip, port, (char)'\0');
+		sprintf(str, "/ip4/%s/tcp/%d", ip, port);
 		out->address = multiaddress_new_from_string(str);
 	}
 	return out;

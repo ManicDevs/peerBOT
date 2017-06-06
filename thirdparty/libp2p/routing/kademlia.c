@@ -523,7 +523,7 @@ struct MultiAddress** search_kademlia(char* peer_id, int timeout)
 
                 for (i = 0 ; i < search_result->ipv4_count ; i++) {
                     if (inet_ntop(AF_INET, &search_result->ipv4[i].ip, ipstr, sizeof ipstr)) {
-                        snprintf (str, sizeof str, "/ip4/%s/tcp/%d%c", ipstr, search_result->ipv4[i].port, (char)'\0');
+                        snprintf (str, sizeof str, "/ip4/%s/tcp/%d", ipstr, search_result->ipv4[i].port);
                         if (dht_debug) {
                             fprintf(dht_debug, "SEARCH %s (%d) = %s\n", peer_id, c, str);
                         }
@@ -535,7 +535,7 @@ struct MultiAddress** search_kademlia(char* peer_id, int timeout)
                 }
                 for (i = 0 ; i < search_result->ipv6_count ; i++) {
                     if (inet_ntop(AF_INET6, search_result->ipv6[i].ip, ipstr, sizeof ipstr)) {
-                        snprintf (str, sizeof str, "/ip6/%s/tcp/%d%c", ipstr, search_result->ipv6[i].port, (char)'\0');
+                        snprintf (str, sizeof str, "/ip6/%s/tcp/%d", ipstr, search_result->ipv6[i].port);
                         if (dht_debug) {
                             fprintf(dht_debug, "SEARCH %s (%d) = %s\n", peer_id, c, str);
                         }

@@ -64,7 +64,7 @@ int test_dialer_dial() {
 
 int test_dialer_dial_multistream() {
 	int retVal = 0;
-	char* config_dir = "/tmp/.ipfs/config";
+	char* config_dir = "/home/parallels/.ipfs/config";
 	char* destination_string = "/ip4/192.210.179.217/tcp/4001/";
 	char* peer_id = NULL;
 	struct PrivateKey* private_key = NULL;

@@ -162,7 +162,7 @@ int libp2p_routing_dht_handle_add_provider(struct SessionContext* session, struc
 			struct Peerstore* peerstore, struct ProviderStore* providerstore, unsigned char** result_buffer, size_t* result_buffer_size) {
 	int retVal = 0;
 	struct Libp2pPeer *peer = NULL;
-
+	
 	//TODO: verify peer signature
 	/*
 	if (message->record != NULL && message->record->author != NULL && message->record->author_size > 0
@@ -192,7 +192,7 @@ int libp2p_routing_dht_handle_add_provider(struct SessionContext* session, struc
 		multiaddress_get_ip_address(session->default_stream->address, &ip);
 		int port = multiaddress_get_ip_port(peer_ma);
 		char* peer_id = multiaddress_get_peer_id(peer_ma);
-		sprintf(new_string, "/ip4/%s/tcp/%d/ipfs/%s%c", ip, port, peer_id, (char)'\0');
+		sprintf(new_string, "/ip4/%s/tcp/%d/ipfs/%s", ip, port, peer_id);
 		free(ip);
 		free(peer_id);
 		struct MultiAddress* new_ma = multiaddress_new_from_string(new_string);
