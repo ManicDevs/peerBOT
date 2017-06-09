@@ -22,14 +22,17 @@ libp2p:
 prebuild:
 	@echo "[Peerbot Compilation]"
 	cp thirdparty/liblmdb/liblmdb.a build/
+	cd pn_logger; make all
+	cd pn_hashing; make all
+	cd pn_core; make all
 
 peerbot:
 	@if test ! -f build/libp2p.a; then \
 		echo "Please use only 'make'"; \
 		exit 1; \
 	fi
-	cd entry; make all
-	cp entry/entry build/peerbot
+	cd pn_entry; make all
+	cp pn_entry/entry build/peerbot
 
 install:
 	@echo "[Peerbot Installation]"
@@ -39,5 +42,8 @@ clean:
 	@echo "[Thirdparty Cleanup]"
 	cd thirdparty; make clean
 	@echo "[Peerbot Cleanup]"
-	cd entry; make clean
+	cd pn_entry; make clean
+	cd pn_core; make clean
+	cd pn_hashing; make clean
+	cd pn_logger; make clean
 	rm -rf build/

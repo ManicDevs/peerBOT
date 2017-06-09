@@ -9,7 +9,7 @@
  * @param output where to place the results
  * @returns 1
  */
-int libp2p_crypto_hashing_sha256(const unsigned char* input, size_t input_length, unsigned char* output);
+int libp2p_crypto_hashing_sha256(const char* input, size_t input_length, unsigned char* output);
 
 /**
  * Initialize a sha256 hmac process
@@ -25,7 +25,7 @@ int libp2p_crypto_hashing_sha256_init(mbedtls_sha256_context* ctx);
  * @param input_size the size of input
  * @returns true(1) on success, otherwise false(0)
  */
-int libp2p_crypto_hashing_sha256_update(mbedtls_sha256_context* ctx, const unsigned char* input, size_t input_size);
+int libp2p_crypto_hashing_sha256_update(mbedtls_sha256_context* ctx, const char* input, size_t input_size);
 
 /**
  * finalize a sha256 hmac process

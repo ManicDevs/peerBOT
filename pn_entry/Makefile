@@ -1,8 +1,13 @@
 CC = gcc
 CFLAGS = -O0 -I../include -I../thirdparty -I../thirdparty/multihash/include -I../thirdparty/multiaddr/include -I../thirdparty/protobuf -I../thirdparty/libp2p/include -g3 -Wall -std=c99
-LFLAGS = -L../build -lm -lmultihash -lmultiaddr -lprotobuf -lp2p -lpthread -lresolv
-DEPS = repo/test_repo_bootstrap_peers.h repo/test_repo_config.h repo/test_repo_identity.h cid/test_cid.h
+LFLAGS = -L../build -lp2p -lm -lmultihash -lmultiaddr -lprotobuf -lpthread
+DEPS =
 OBJS = \
+	../pn_logger/logger.o \
+	../pn_hashing/hashing.o \
+	../pn_core/config/identity.o \
+	../pn_core/config/config.o \
+	../pn_core/core.o \
 	entry.o
 
 %.o: %.c $(DEPS)

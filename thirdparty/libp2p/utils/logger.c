@@ -34,7 +34,12 @@ int libp2p_logger_free() {
 			free(libp2p_utils_vector_get(logger_classes, i));
 		}
 		libp2p_utils_vector_free(logger_classes);
+        logger_classes = NULL;
 	}
+
+    if(logger_classes != NULL)
+        return 0;
+
 	return 1;
 }
 

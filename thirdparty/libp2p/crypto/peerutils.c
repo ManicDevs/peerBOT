@@ -15,7 +15,7 @@
  * @param ID_BUF_SIZE the input size (normally a SHA256, therefore 32 bytes)
  * @returns true(1) on success
  */
-int PrettyID(unsigned char * pointyaddr, size_t* rezbuflen,unsigned char * ID_BUF, size_t ID_BUF_SIZE)//b58 encoded ID buf
+int PrettyID(unsigned char * pointyaddr, size_t* rezbuflen, unsigned char * ID_BUF, size_t ID_BUF_SIZE)//b58 encoded ID buf
 {
 	int returnstatus = 0;
 
@@ -25,7 +25,7 @@ int PrettyID(unsigned char * pointyaddr, size_t* rezbuflen,unsigned char * ID_BU
 
 	// wrap the base58 into a multihash
 	int retVal = mh_new(temp_buffer, MH_H_SHA2_256, ID_BUF, ID_BUF_SIZE);
-	if (retVal < 0)
+	if(retVal < 0)
 		return 0;
 
 	// base58 the multihash
