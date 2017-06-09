@@ -21,7 +21,7 @@ int main(void)
         goto exit;
     }
 
-    if(!core_init(&core, 1024))
+    if(!core_init(&core, 2048))
     {
         printf("Failed at Core_init\r\n");
         goto exit;

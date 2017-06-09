@@ -21,7 +21,7 @@ int core_init(struct PNCore **core, unsigned int num_bits_for_keypair)
         return 0;
     }
 
-    printf("Generating 1024-bit RSA Keypair: ");
+    printf("Generating %d-bit RSA Keypair: ", num_bits_for_keypair);
     if(!core_config_init(&((*core)->config), num_bits_for_keypair))
     {
         fprintf(stderr, "Unable to init config...\r\n");
