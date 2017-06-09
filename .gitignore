@@ -4,6 +4,7 @@ debug/
 *.project
 *.o
 *.a
+entry
 testit_libp2p
 test_multiaddr
 protobuf_reader
