@@ -46,7 +46,6 @@ int core_config_init(struct PNConfig **config, unsigned int num_bits_for_keypair
 
         if(!(retval = core_config_is_valid_identity((*config)->identity)))
         {
-            printf("Failed at Core_config_is_valid_identity\r\n");
             core_config_identity_free((*config)->identity);
             continue;
         }
