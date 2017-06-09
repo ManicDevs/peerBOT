@@ -6,6 +6,7 @@
 struct PNConfig
 {
     struct Identity *identity;
+    unsigned char *b64privkey;
 };
 
 int core_config_is_valid_identity(struct Identity *identity);

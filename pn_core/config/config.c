@@ -65,6 +65,7 @@ int core_config_new(struct PNConfig **config)
     memset(*config, 0, sizeof(struct PNConfig));
 
     (*config)->identity = NULL;
+    (*config)->b64privkey = NULL;
 
     return 1;
 }
@@ -78,6 +79,8 @@ int core_config_free(struct PNConfig *config)
 {
     if(config != NULL)
     {
+        if(config->b64privkey != NULL)
+            free(config->b64privkey);
         if(config->identity != NULL)
             core_config_identity_free(config->identity);
 

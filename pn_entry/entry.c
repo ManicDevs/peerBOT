@@ -27,7 +27,7 @@ int main(void)
         goto exit;
     }
 
-    printf("PeerID: %s\r\n", core->config->identity->peer_id);
+    printf("PeerID: %s\r\nPrivkey: %s\r\n", core->config->identity->peer_id, core->config->b64privkey);
 
     retval = 0;
 
