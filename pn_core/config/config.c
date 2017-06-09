@@ -21,9 +21,6 @@ int core_config_is_valid_identity(struct Identity *identity)
  * create a configuration based on the passed in parameters
  * @param config the configuration struct to be filled in
  * @param num_bits_for_keypair number of bits for the key pair
- * @param repo_path the path to the configuration
- * @param swarm_port the port to run on
- * @param bootstrap_peers vector of Multiaddresses of fellow peers
  * @returns true(1) on success, otherwise 0
  */
 int core_config_init(struct PNConfig **config, unsigned int num_bits_for_keypair)
