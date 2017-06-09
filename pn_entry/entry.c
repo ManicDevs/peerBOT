@@ -27,6 +27,8 @@ int main(void)
         goto exit;
     }
 
+    printf("PeerID: %s\r\n", core->config->identity->peer_id);
+
     retval = 0;
 
 exit:
