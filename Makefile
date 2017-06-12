@@ -23,6 +23,7 @@ prebuild:
 	@echo "[Peerbot Compilation]"
 	cp thirdparty/liblmdb/liblmdb.a build/
 	cd pn_logger; make all
+	cd pn_routing; make all
 	cd pn_core; make all
 
 peerbot:
@@ -43,5 +44,6 @@ clean:
 	@echo "[Peerbot Cleanup]"
 	cd pn_entry; make clean
 	cd pn_core; make clean
+	cd pn_routing; make clean
 	cd pn_logger; make clean
 	rm -rf build/

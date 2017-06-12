@@ -4,6 +4,8 @@
 struct PNCore
 {
     struct PNConfig *config;
+    struct PNNode *node;
+    struct PNRouting *routing;
 };
 
 int core_init(struct PNCore **core, unsigned int num_bits_for_keypair);

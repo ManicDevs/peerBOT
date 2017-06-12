@@ -6,15 +6,13 @@ CFLAGS += -g3
 endif
 
 LFLAGS =
-DEPS = pn_core/node.h pn_core/core.h
-OBJS = node.c core.c
+DEPS = pn_routing/routing.h
+OBJS = routing.c
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 all: $(OBJS)
-	cd config; make all
 
 clean:
 	rm -f *.o
-	cd config; make clean

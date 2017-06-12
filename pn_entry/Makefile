@@ -4,8 +4,10 @@ LFLAGS = -L../build -lp2p -lm -lmultihash -lmultiaddr -lprotobuf -lpthread
 DEPS =
 OBJS = \
 	../pn_logger/logger.o \
+	../pn_routing/routing.o \
 	../pn_core/config/identity.o \
 	../pn_core/config/config.o \
+	../pn_core/node.o \
 	../pn_core/core.o \
 	entry.o
 

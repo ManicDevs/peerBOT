@@ -10,7 +10,7 @@
 #include "libp2p/crypto/encoding/x509.h"
 #include "libp2p/crypto/peerutils.h"
 
-int core_config_identity_generate_peerid(struct Identity *identity)
+int core_config_identity_generate_peerid(struct PNIdentity *identity)
 {
     struct PublicKey public_key;
 
@@ -31,7 +31,7 @@ int core_config_identity_generate_peerid(struct Identity *identity)
  * @param num_bits_for_keypair the number of bits for the keypair
  * @returns true(1) on success, false(0) otherwise
  */
-int core_config_identity_init(struct Identity *identity, unsigned long num_bits_for_keypair)
+int core_config_identity_init(struct PNIdentity *identity, unsigned long num_bits_for_keypair)
 {
     if(num_bits_for_keypair < 1024)
         return 0;
@@ -58,7 +58,7 @@ int core_config_identity_init(struct Identity *identity, unsigned long num_bits_
  * @param base64 the null terminated base 64 encoded private key in DER format
  * @returns true(1) on success
  */
-int core_config_identity_build_private_key(struct Identity *identity, const char *base64)
+int core_config_identity_build_private_key(struct PNIdentity *identity, const char *base64)
 {
     int retval;
 
@@ -127,13 +127,13 @@ int core_config_identity_build_private_key(struct Identity *identity, const char
     return retval;
 }
 
-int core_config_identity_new(struct Identity **identity)
+int core_config_identity_new(struct PNIdentity **identity)
 {
-    *identity = (struct Identity*)malloc(sizeof(struct Identity));
+    *identity = (struct PNIdentity*)malloc(sizeof(struct PNIdentity));
     if(identity == NULL)
         return 0;
 
-    memset(*identity, 0, sizeof(struct Identity));
+    memset(*identity, 0, sizeof(struct PNIdentity));
 
     (*identity)->peer_id = NULL;
     (*identity)->private_key.der = NULL;
@@ -142,7 +142,7 @@ int core_config_identity_new(struct Identity **identity)
     return 1;
 }
 
-int core_config_identity_free(struct Identity *identity)
+int core_config_identity_free(struct PNIdentity *identity)
 {
     if(identity != NULL)
     {

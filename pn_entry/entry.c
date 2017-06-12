@@ -7,11 +7,11 @@
 #include "pn_core/config/identity.h"
 #include "pn_logger/logger.h"
 
-struct PNCore *core = NULL;
-
 int main(void)
 {
     int retval = 1;
+
+    struct PNCore *core = NULL;
 
     printf("Starting...\r\n");
 
@@ -27,7 +27,8 @@ int main(void)
         goto exit;
     }
 
-    printf("PeerID: %s\r\nPrivkey: %s\r\n", core->config->identity->peer_id, core->config->b64privkey);
+    printf("[PeerID]\r\n%s\r\n[Base64'd Privkey]\r\n%s\r\n",
+        core->config->identity->peer_id, core->config->b64privkey);
 
     retval = 0;
 
